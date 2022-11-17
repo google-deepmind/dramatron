@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' href='styles.css'>
+  <title>Dramatron</title>
+</head>
+<body class='landing'>
+
+  <div class='intro-input'>
+    <div class='pre-header'>Welcome to</div>
+    <div class='title'>Dramatron</div>
+    <div class='text'>
+      <p>You’ll need an OpenAI API key to use this page. If you don’t have one,
+         you can request one
+         <a href='https://beta.openai.com/account/api-keys'>here</a>.</p>
+    </div>
+
+    <input type='text' id='apikey' placeholder='API key'>
+    <button id='submit-apikey'>&rarr;</button>
+
+    <div class='text' id='invalid-message'>Error: invalid credential.</div>
+  </div>
+
+  <div class='text' id='bottom-notes'>
+    <p>Dramatron is a script writing tool that leverages large language models.
+       The work was published as a pre-print in Mirowski, Mathewson et al (2022)
+       "<a href='https://arxiv.org/abs/2209.14958'>Co-Writing Screenplays and
+         Theatre Scripts with Language Models: An Evaluation by Industry
+         Professionals</a>".</p>
+    <p>This page allows you to use a basic version of the Dramatron tool. For
+       more control over the generation settings and parameters, please check
+       out <a href='#'>this Colab</a>.</p>
+  </div>
+
+  <script type='module' src='./index.js'></script>
+</body>

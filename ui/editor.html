@@ -1,0 +1,141 @@
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' href='styles.css'>
+  <title>Dramatron</title>
+</head>
+<body class='editor'>
+
+  <div class='title'>Dramatron</div><br>
+
+  <!-- Storyline -->
+
+  <div class='text storyline-main' id='top-line'>
+    First, you’ll need to enter a log line - a few-sentence summary of the
+    action. Log lines typically contain the setting, protagonist, antagonist, a
+    conflict or goal, and sometimes the inciting incident.</div><br>
+  <div class='text storyline-min min-header'>Log line</div>
+  <textarea id='storyline-field' rows=3
+            placeholder='Example: "James finds a well in his backyard that is haunted by the ghost of Sam."'></textarea>
+  <br><br>
+  <button class='storyline-main' id='submit-storyline'>Continue
+  </button>
+
+  <!-- Title -->
+
+  <div class='text title-main'>
+    Now Dramatron can generate a title for your script based on the log line.
+    You can generate new titles until you get one you like, or edit the title
+    directly once generated.<br><br></div>
+  <button id='submit-title' class='title-main'>Generate title</button>
+  <div id='submit-title-loader' class='loader'>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+  </div>
+  <div class='text title-min min-header'>Title</div>
+  <textarea class='title-min title-mid' id='title-field' rows=3></textarea>
+  <br><br>
+  <div class='text title-error'>
+    Failed to generate a title after a few attempts. Try again with a different
+    log line.
+  </div>
+  <button id='continue-title' class='title-mid'>Continue</button>
+
+  <!-- Characters -->
+
+  <div class='text characters-main'>
+    Now generate descriptions of some characters based on the log line. As
+    before, you can generate multiple times, or edit the character descriptions
+    directly. You can also go back and edit the logline above.<br><br></div>
+  <button id='submit-characters' class='characters-main'>Generate characters
+  </button>
+  <div id='submit-characters-loader' class='loader'>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+  </div>
+  <div class='text characters-min min-header'>Characters</div>
+  <textarea class='characters-min characters-mid' id='characters-field' rows=2>
+  </textarea><br><br>
+  <div class='text characters-error'>
+    Failed to generate characters after a few attempts. Try again with a
+    different log line or title.
+  </div>
+  <button id='continue-characters' class='characters-mid'>Continue</button>
+
+  <!-- Scenes -->
+
+  <div class='text scenes-main'>
+    Now generate a sequence of scenes (a plot synopsis) based on the log line
+    and the characters.<br><br></div>
+  <button id='submit-scenes' class='scenes-main'>Generate scenes</button>
+  <div id='submit-scenes-loader' class='loader'>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+  </div>
+  <div class='text scenes-min min-header'>Scenes</div>
+  <textarea class='scenes-min scenes-mid' id='scenes-field' rows=5>
+  </textarea><br><br>
+  <div class='text scenes-error'>
+    Failed to generate scenes after a few attempts. Try again with a different
+    log line or title.
+  </div>
+  <button id='continue-scenes' class='scenes-mid'>Continue</button>
+
+  <!-- Places -->
+
+  <div class='text places-main'>
+    Now generate a detailed description of the setting for each scene.<br><br>
+  </div>
+  <button id='submit-places' class='places-main'>Generate settings</button>
+  <div id='submit-places-loader' class='loader'>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+  </div>
+  <div class='text places-min min-header'>Settings</div>
+  <textarea class='places-min places-mid' id='places-field' rows=4>
+  </textarea><br><br>
+  <button id='continue-places' class='places-mid'>Continue</button>
+
+  <!-- Dialog -->
+
+  <div class='text dialog-main'>
+    <p>Finally, you’re ready to generate the dialogue for each scene, based on
+       the log line, characters, scene description, and setting.</p>
+    <p>Generate for...</p>
+  </div>
+  <div id='submit-dialog-buttons'></div>
+  <div id='submit-dialog-loader' class='loader'>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+    <span class='loader-block'>&#9608;</span>
+  </div>
+  <div class='text dialog-min min-header'>Dialog</div>
+  <div class='dialog-min dialog-mid' id='dialog-fields'></div>
+
+  <!-- Download -->
+
+  <div class='text download'>
+    <br><br>When you’re happy with the title, characters, scenes, settings, and
+    dialogues, you can download the full script and/or start over with a new log
+    line.<br><br>
+  </div>
+  <button id='submit-download' class='download'>Download</button>
+  <button id='submit-start-over' class='download'>Start over</button>
+
+
+  <script type='module' src='./main.js'></script>
+</body>
