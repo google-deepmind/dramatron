@@ -15,7 +15,14 @@ const MAX_PARAGRAPH_LENGTH = 1024;
 const MAX_PARAGRAPH_LENGTH_CHARACTERS = 2048;
 const MAX_PARAGRAPH_LENGTH_SCENES = 4096;
 
-const apiKey = window.location.hash.slice(1);
+/** Extract API keys from URL hash. */
+let apiKey = window.location.hash.slice(1);
+let perspectiveKey = undefined;
+if (apiKey.includes('&')) {
+  const keys = apiKey.split('&');
+  apiKey = keys[0];
+  perspectiveKey = keys[1];
+}
 
 /************************************************************************
  * UI content extractors                                                *
@@ -134,10 +141,14 @@ async function generateDialog(sceneIndex) {
   const dialogPrompt = promptConstructors.createDialogPrompt(
       sceneIndex, scenes(), places(), characters(), storyline());
   const response = await apiUtils.sampleUntilSuccess(
-      apiKey, dialogPrompt, DEFAULT_SAMPLE_LENGTH, MAX_PARAGRAPH_LENGTH,
-      function(r) {
+      apiKey, dialogPrompt, DEFAULT_SAMPLE_LENGTH,
+      MAX_PARAGRAPH_LENGTH, function(r) {
         return r;
-      });
+      }, perspectiveKey);
+  if (response == apiUtils.TOXICITY_ERROR) {
+    setDisplay('dialog-toxic', 'unset');
+    return;
+  }
   const field = document.querySelector(`#dialog-field-${sceneIndex}`);
   field.value = response;
   setDisplay('dialog-mid', 'unset');
@@ -205,12 +216,15 @@ document.querySelector('#submit-title').onclick = async () => {
   showLoading('#submit-title');
   const response = await apiUtils.sampleUntilSuccess(
       apiKey, prompt, SAMPLE_LENGTH_TITLE, MAX_PARAGRAPH_LENGTH,
-      outputParsers.extractTitle);
-  if (response == undefined) {
+      outputParsers.extractTitle, perspectiveKey);
+  if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('title-error', 'unset');
+  } else if (response == apiUtils.TOXICITY_ERROR) {
+    setDisplay('title-toxic', 'unset');
   } else {
     setDisplay('title-mid', 'unset');
     setDisplay('title-error', 'none');
+    setDisplay('title-toxic', 'none');
     document.querySelector('#title-field').value = response;
   }
   stopLoading('#submit-title');
@@ -234,12 +248,15 @@ document.querySelector('#submit-characters').onclick = async () => {
   showLoading('#submit-characters');
   const response = await apiUtils.sampleUntilSuccess(
       apiKey, prompt, DEFAULT_SAMPLE_LENGTH, MAX_PARAGRAPH_LENGTH_CHARACTERS,
-      outputParsers.extractCharacters);
-  if (response == undefined) {
+      outputParsers.extractCharacters, perspectiveKey);
+  if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('characters-error', 'unset');
+  } else if (response == apiUtils.TOXICITY_ERROR) {
+    setDisplay('characters-toxic', 'unset');
   } else {
     setDisplay('characters-mid', 'unset');
     setDisplay('characters-error', 'none');
+    setDisplay('characters-toxic', 'none');
     document.querySelector('#characters-field').value = response;
   }
   stopLoading('#submit-characters');
@@ -263,12 +280,15 @@ document.querySelector('#submit-scenes').onclick = async () => {
   showLoading('#submit-scenes');
   const response = await apiUtils.sampleUntilSuccess(
       apiKey, prompt, DEFAULT_SAMPLE_LENGTH, MAX_PARAGRAPH_LENGTH_SCENES,
-      outputParsers.extractScenes);
-  if (response == undefined) {
+      outputParsers.extractScenes, perspectiveKey);
+  if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('scenes-error', 'unset');
+  } else if (response == apiUtils.TOXICITY_ERROR) {
+    setDisplay('scenes-toxic', 'unset');
   } else {
     setDisplay('scenes-mid', 'unset');
     setDisplay('scenes-error', 'none');
+    setDisplay('scenes-toxic', 'none');
     document.querySelector('#scenes-field').value = response;
   }
   stopLoading('#submit-scenes');
@@ -300,8 +320,9 @@ document.querySelector('#submit-places').onclick = async () => {
         apiKey, `${basePrompt}${placePrompt}`, SAMPLE_LENGTH_PLACE,
         MAX_PARAGRAPH_LENGTH, function(r) {
           return outputParsers.extractPlace(r, placePrefix);
-        });
-    if (response !== undefined) {
+        }, perspectiveKey);
+    if (response !== apiUtils.GENERATION_ERROR &&
+        response !== apiUtils.TOXICITY_ERROR) {
       sampledPlaces.push(response);
     }
   }

@@ -6,7 +6,7 @@
 </head>
 <body class='editor'>
 
-  <div class='title'>Dramatron</div><br>
+  <div class='title'><a href='./index.html'>Dramatron</a></div><br>
 
   <!-- Storyline -->
 
@@ -42,6 +42,10 @@
     Failed to generate a title after a few attempts. Try again with a different
     log line.
   </div>
+  <div class='text title-toxic'>
+    The model returned a response with a toxicity score above the threshold. Try
+    editing the logline and regenerating the title.
+  </div>
   <button id='continue-title' class='title-mid'>Continue</button>
 
   <!-- Characters -->
@@ -66,6 +70,10 @@
     Failed to generate characters after a few attempts. Try again with a
     different log line or title.
   </div>
+  <div class='text characters-toxic'>
+    The model returned a response with a toxicity score above the threshold. Try
+    again with a different log line or title.
+  </div>
   <button id='continue-characters' class='characters-mid'>Continue</button>
 
   <!-- Scenes -->
@@ -88,6 +96,10 @@
     Failed to generate scenes after a few attempts. Try again with a different
     log line or title.
   </div>
+  <div class='text scenes-toxic'>
+    The model returned a response with a toxicity score above the threshold. Try
+    again with a differnt log line or title.
+  </div>
   <button id='continue-scenes' class='scenes-mid'>Continue</button>
 
   <!-- Places -->
@@ -106,6 +118,10 @@
   <div class='text places-min min-header'>Settings</div>
   <textarea class='places-min places-mid' id='places-field' rows=4>
   </textarea><br><br>
+  <div class='text places-toxic'>
+    The model returned a response with a toxicity score above the threshold. Try
+    again with a different log line, title, or scenes.
+  </div>
   <button id='continue-places' class='places-mid'>Continue</button>
 
   <!-- Dialog -->
@@ -125,6 +141,10 @@
   </div>
   <div class='text dialog-min min-header'>Dialog</div>
   <div class='dialog-min dialog-mid' id='dialog-fields'></div>
+  <div class='text dialog-toxic'>
+    The model returned a response with a toxicity score above the threshold. Try
+    again with different values in the fields above.
+  </div>
 
   <!-- Download -->
 

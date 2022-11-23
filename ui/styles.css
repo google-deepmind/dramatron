@@ -27,6 +27,12 @@ p {
   font-size: 30px;
 }
 
+.title a {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+
 #top-line {
   margin-top: 10px;
 }
@@ -104,27 +110,32 @@ button.dialog-main {
   margin-bottom: 5px;
 }
 
-#invalid-message,
+.invalid-message,
 .loader,
 .storyline-min,
 .title-main,
 .title-mid,
 .title-min,
 .title-error,
+.title-toxic,
 .characters-main,
 .characters-mid,
 .characters-min,
 .characters-error,
+.characters-toxic,
 .scenes-main,
 .scenes-mid,
 .scenes-min,
 .scenes-error,
+.scenes-toxic,
 .places-main,
 .places-mid,
 .places-min,
+.places-toxic,
 .dialog-main,
 .dialog-mid,
 .dialog-min,
+.dialog-toxic,
 .download {
   display: none;
 }

@@ -9,17 +9,34 @@
 
   <div class='intro-input'>
     <div class='pre-header'>Welcome to</div>
-    <div class='title'>Dramatron</div>
+    <div class='title'><a href='./index.html'>Dramatron</a></div>
     <div class='text'>
       <p>You’ll need an OpenAI API key to use this page. If you don’t have one,
          you can request one
          <a href='https://beta.openai.com/account/api-keys'>here</a>.</p>
     </div>
 
-    <input type='text' id='apikey' placeholder='API key'>
-    <button id='submit-apikey'>&rarr;</button>
+    <input type='text' id='apikey' placeholder='GPT-3 API key'>
 
-    <div class='text' id='invalid-message'>Error: invalid credential.</div>
+    <div class='text invalid-message' id='invalid-key'>
+      Error: invalid credential.
+    </div>
+    <div class='text'>
+      <p>The language model may generate offensive text. If you choose, you
+      can provide a
+      <a href='https://developers.perspectiveapi.com/s/docs-enable-the-api'>
+        Perspective API key</a>, which will hide model outputs that exceed a
+      toxicity threshold and prompt you to regenerate the text.</p>
+    </div>
+
+    <input type='text' id='perspectivekey' placeholder='Perspective API key'>
+
+    <div class='text invalid-message' id='invalid-perspective'>
+      Error: invalid credential.
+    </div>
+  </div>
+  <div class='submit-keys'>
+    <button id='submit-apikeys'>Get started</button>
   </div>
 
   <div class='text' id='bottom-notes'>

@@ -7,6 +7,10 @@ import * as prefixes from './prefixes.js';
 
 const VALIDATION_URL = 'https://api.openai.com/v1/models';
 const COMPLETION_URL = 'https://api.openai.com/v1/completions';
+const TOXICITY_URL =
+    'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze';
+
+const TOXICITY_THRESHOLD = 0.7;
 
 const MAX_FAILURES = 5;
 
@@ -19,6 +23,12 @@ const FREQUENCY_PENALTY = 0.23;
 const PRESENCE_PENALTY = 0.23;
 const STOP_SEQUENCES = ['<stop>', '<end>\n\n\n', '<end>'];
 const NUM_SAMPLES = 1;
+
+/** Error raised when the LM fails to generate well-formed text. */
+export const GENERATION_ERROR = 'generation_error';
+
+/** Error raised when the LM returns a toxic response. */
+export const TOXICITY_ERROR = 'toxicity_error';
 
 /**
  * Makes simple request to list available models.
@@ -40,22 +50,95 @@ async function makeValidationRequest(apiKey) {
 }
 
 /**
- * Makes trivial request to check if API key is valid.
+ * Makes trivial request to check if GPT-3 API key is valid.
  * @param {string} apiKey
  * @return {boolean}
  */
-export async function validateKey(apiKey) {
+export async function validateGpt3Key(apiKey) {
   const listResponse = await makeValidationRequest(apiKey);
   return listResponse.data !== undefined;
 }
 
 /**
- * Constructs API request.
+ * Constructs Perspective API request.
+ * @param {string} text
+ * @return {!Object}
+ */
+function createToxicityRequest(text) {
+  const request = {
+    comment: {text},
+    requestedAttributes: {TOXICITY: {}},
+  };
+  return request;
+}
+
+/**
+ * Makes a request to the Perspective API.
+ * @param {!Object} request
+ * @param {string} perspectiveKey
+ * @return {Object?}
+ */
+async function getToxicityResponse(request, perspectiveKey) {
+  const url = `${TOXICITY_URL}?key=${perspectiveKey}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      //'Authorization': `Bearer ${perspectiveKey}`,
+    },
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(request),
+  });
+  return response.json();
+}
+
+/**
+ * Determines if response is above toxicity threshold.
+ * @param {Object?} response
+ * @return {boolean}
+ */
+function extractToxicity(response) {
+  const score = response.attributeScores.TOXICITY.summaryScore.value;
+  return score > TOXICITY_THRESHOLD;
+}
+
+/**
+ * Sanitizes a response with the Perspective API.
+ * @param {string} text
+ * @param {string} perspectiveKey
+ * @return {boolean}
+ */
+async function isToxic(text, perspectiveKey) {
+  if (!perspectiveKey) return false;
+  const request = createToxicityRequest(text);
+  const response = await getToxicityResponse(request, perspectiveKey);
+  const toxic = extractToxicity(response);
+  return toxic;
+}
+
+/**
+ * Makes trivial request to check if Perspective API key is valid.
+ * @param {string} apiKey
+ * @return {boolean}
+ */
+export async function validatePerspectiveKey(apiKey) {
+  try {
+    await isToxic('placeholder text', apiKey);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+/**
+ * Constructs GPT-3 API request.
  * @param {string} prompt
  * @param {number} sampleLength
  * @return {!Object}
  */
-function createRequest(prompt, sampleLength) {
+function createCompletionRequest(prompt, sampleLength) {
   const request = {
     model: MODEL,
     prompt: prompt,
@@ -78,7 +161,7 @@ function createRequest(prompt, sampleLength) {
  * @return {Object?}
  */
 async function getResponse(apiKey, prompt, sampleLength) {
-  const request = createRequest(prompt, sampleLength);
+  const request = createCompletionRequest(prompt, sampleLength);
   const response = await fetch(COMPLETION_URL, {
     method: 'POST',
     mode: 'cors',
@@ -131,20 +214,24 @@ export async function getCompletion(
  * @param {number} sampleLength
  * @param {number} maxLength
  * @param {function(string)} successFunction
+ * @param {string?} perspectiveKey
  * @return {string}
  */
 export async function sampleUntilSuccess(
-    apiKey, generationPrompt, sampleLength, maxLength, successFunction) {
+    apiKey, generationPrompt, sampleLength, maxLength, successFunction,
+    perspectiveKey) {
   let failures = 0;
   while (failures < MAX_FAILURES) {
     try {
       const response = await getCompletion(
           apiKey, generationPrompt, sampleLength, maxLength);
       const value = successFunction(response);
+      const toxic = await isToxic(value, perspectiveKey);
+      if (toxic) return TOXICITY_ERROR;
       return value;
     } catch (err) {
       failures += 1;
     }
   }
-  return undefined;
+  return GENERATION_ERROR;
 }
