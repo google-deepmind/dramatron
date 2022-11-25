@@ -7,6 +7,8 @@ body {
   font-family: monospace;
   font-size: 15px;
   padding: 30px 50px;
+  max-width: 800px;
+  margin: auto;
 }
 
 @media screen and (max-width: 480px) {
@@ -19,11 +21,20 @@ p {
   line-height: 1.25;
 }
 
+.details p {
+  margin-top: 25px;
+}
+
+.details li {
+  margin-top: 10px;
+}
+
 .landing .title {
   font-size: 40px;
 }
 
-.editor .title {
+.editor .title,
+.details .title {
   font-size: 30px;
 }
 
@@ -44,9 +55,14 @@ p {
 
 #bottom-notes {
   width: 80%;
+  max-width: 800px;
   position: absolute;
   bottom: 20px;
   z-index: -1;
+}
+
+#credit {
+  font-size: 12px;
 }
 
 a {
