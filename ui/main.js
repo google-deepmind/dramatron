@@ -145,7 +145,7 @@ async function generateDialog(sceneIndex) {
       MAX_PARAGRAPH_LENGTH, function(r) {
         return r;
       }, perspectiveKey);
-  if (response == apiUtils.TOXICITY_ERROR) {
+  if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('dialog-toxic', 'unset');
     return;
   }
@@ -219,7 +219,7 @@ document.querySelector('#submit-title').onclick = async () => {
       outputParsers.extractTitle, perspectiveKey);
   if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('title-error', 'unset');
-  } else if (response == apiUtils.TOXICITY_ERROR) {
+  } else if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('title-toxic', 'unset');
   } else {
     setDisplay('title-mid', 'unset');
@@ -251,7 +251,7 @@ document.querySelector('#submit-characters').onclick = async () => {
       outputParsers.extractCharacters, perspectiveKey);
   if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('characters-error', 'unset');
-  } else if (response == apiUtils.TOXICITY_ERROR) {
+  } else if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('characters-toxic', 'unset');
   } else {
     setDisplay('characters-mid', 'unset');
@@ -283,7 +283,7 @@ document.querySelector('#submit-scenes').onclick = async () => {
       outputParsers.extractScenes, perspectiveKey);
   if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('scenes-error', 'unset');
-  } else if (response == apiUtils.TOXICITY_ERROR) {
+  } else if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('scenes-toxic', 'unset');
   } else {
     setDisplay('scenes-mid', 'unset');
@@ -322,7 +322,7 @@ document.querySelector('#submit-places').onclick = async () => {
           return outputParsers.extractPlace(r, placePrefix);
         }, perspectiveKey);
     if (response !== apiUtils.GENERATION_ERROR &&
-        response !== apiUtils.TOXICITY_ERROR) {
+        response !== apiUtils.PERSPECTIVE_ERROR) {
       sampledPlaces.push(response);
     }
   }

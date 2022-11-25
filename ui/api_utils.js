@@ -7,10 +7,10 @@ import * as prefixes from './prefixes.js';
 
 const VALIDATION_URL = 'https://api.openai.com/v1/models';
 const COMPLETION_URL = 'https://api.openai.com/v1/completions';
-const TOXICITY_URL =
+const PERSPECTIVE_URL =
     'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze';
 
-const TOXICITY_THRESHOLD = 0.7;
+const PERSPECTIVE_THRESHOLD = 0.8;
 
 const MAX_FAILURES = 5;
 
@@ -27,8 +27,8 @@ const NUM_SAMPLES = 1;
 /** Error raised when the LM fails to generate well-formed text. */
 export const GENERATION_ERROR = 'generation_error';
 
-/** Error raised when the LM returns a toxic response. */
-export const TOXICITY_ERROR = 'toxicity_error';
+/** Error raised when the LM returns a dangerous response. */
+export const PERSPECTIVE_ERROR = 'perspective_error';
 
 /**
  * Makes simple request to list available models.
@@ -64,10 +64,16 @@ export async function validateGpt3Key(apiKey) {
  * @param {string} text
  * @return {!Object}
  */
-function createToxicityRequest(text) {
+function createPerspectiveRequest(text) {
   const request = {
     comment: {text},
-    requestedAttributes: {TOXICITY: {}},
+    requestedAttributes: {
+      TOXICITY: {},
+      SEVERE_TOXICITY: {},
+      IDENTITY_ATTACK: {},
+      INSULT: {},
+      SEXUALLY_EXPLICIT: {},
+    },
   };
   return request;
 }
@@ -78,8 +84,8 @@ function createToxicityRequest(text) {
  * @param {string} perspectiveKey
  * @return {Object?}
  */
-async function getToxicityResponse(request, perspectiveKey) {
-  const url = `${TOXICITY_URL}?key=${perspectiveKey}`;
+async function getPerspectiveResponse(request, perspectiveKey) {
+  const url = `${PERSPECTIVE_URL}?key=${perspectiveKey}`;
   const response = await fetch(url, {
     method: 'POST',
     mode: 'cors',
@@ -95,13 +101,23 @@ async function getToxicityResponse(request, perspectiveKey) {
 }
 
 /**
- * Determines if response is above toxicity threshold.
+ * Determines if response is above the thresholds for dangerous content.
  * @param {Object?} response
  * @return {boolean}
  */
-function extractToxicity(response) {
-  const score = response.attributeScores.TOXICITY.summaryScore.value;
-  return score > TOXICITY_THRESHOLD;
+function sanitize(response) {
+  const scores = response.attributeScores;
+  const toxicity = scores.TOXICITY.summaryScore.value;
+  if (toxicity > PERSPECTIVE_THRESHOLD) return true;
+  const severeToxicity = scores.SEVERE_TOXICITY.summaryScore.value;
+  if (severeToxicity > PERSPECTIVE_THRESHOLD) return true;
+  const identity_attack = scores.IDENTITY_ATTACK.summaryScore.value;
+  if (identity_attack > PERSPECTIVE_THRESHOLD) return true;
+  const insult = scores.INSULT.summaryScore.value;
+  if (insult > PERSPECTIVE_THRESHOLD) return true;
+  const explicit = scores.SEXUALLY_EXPLICIT.summaryScore.value;
+  if (explicit > PERSPECTIVE_THRESHOLD) return true;
+  return false;
 }
 
 /**
@@ -110,12 +126,12 @@ function extractToxicity(response) {
  * @param {string} perspectiveKey
  * @return {boolean}
  */
-async function isToxic(text, perspectiveKey) {
+async function shouldHide(text, perspectiveKey) {
   if (!perspectiveKey) return false;
-  const request = createToxicityRequest(text);
-  const response = await getToxicityResponse(request, perspectiveKey);
-  const toxic = extractToxicity(response);
-  return toxic;
+  const request = createPerspectiveRequest(text);
+  const response = await getPerspectiveResponse(request, perspectiveKey);
+  const isDangerous = sanitize(response);
+  return isDangerous;
 }
 
 /**
@@ -125,7 +141,7 @@ async function isToxic(text, perspectiveKey) {
  */
 export async function validatePerspectiveKey(apiKey) {
   try {
-    await isToxic('placeholder text', apiKey);
+    await shouldHide('placeholder text', apiKey);
     return true;
   } catch (err) {
     return false;
@@ -226,8 +242,8 @@ export async function sampleUntilSuccess(
       const response = await getCompletion(
           apiKey, generationPrompt, sampleLength, maxLength);
       const value = successFunction(response);
-      const toxic = await isToxic(value, perspectiveKey);
-      if (toxic) return TOXICITY_ERROR;
+      const isDangerous = await shouldHide(value, perspectiveKey);
+      if (isDangerous) return PERSPECTIVE_ERROR;
       return value;
     } catch (err) {
       failures += 1;
