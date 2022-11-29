@@ -1,25 +1,42 @@
-# dramatron
+# Dramatron
 
-TODO(b/251452770): Add a description for your new project, explain what is
-being released here, etc... Additional, the following sections are normally
-expected for all releases. Feel free to add additional sections if appropriate
-for your project.
+**Dramatron** is a system that uses large language models that could be useful for authors for **co-writing** theatre scripts and screenplays. Dramatron uses hierarchical story generation for consistency across the generated text. Starting from a log line, Dramatron interactively generates character descriptions, plot points, location descriptions and dialogue. These generations provide human authors with material for compilation, editing, and rewriting.
 
-## Installation
+Dramatron is conceived as a writing tool and as a source of inspiration and exploration for writers. To evaluate Dramatron’s usability and capabilities, we engaged 15 playwrights and screenwriters in two-hour long user study sessions to co-write scripts alongside Dramatron.
 
-Write instructions for how the user should install your code. The instructions
-should ideally be valid when copy-pasted. You can combine this with the Usage
-section if there's no separate installation step.
+One concrete illustration of how Dramatron can be utilised by creative communities is how one playwright staged 4 heavily edited and rewritten scripts co-written alongside Dramatron. In the public theatre show, Plays by Bots, a talented cast of experienced actors with improvisational skills gave meaning to Dramatron scripts through acting and interpretation.
+
+During the development of Dramatron and through discussions with industry professionals, we made several important observations:
+
+* Dramatron is a **co-writing** system that has only been used in collaboration with human writers, and was not conceived or evaluated to be used autonomously.
+* Dramatron’s top-down hierarchical story generation structure does not correspond to every writer's writing process.
+* The output of a language model may include elements of the text used to train the language model. One possible mitigation is for the human co-writer to search for substrings from outputs to help to identify plagiarism.
+* Dramatron may reproduce biases and stereotypes found in the corpus, and may generate offensive text. One possible mitigation is to use the [Perspective API](https://perspectiveapi.com/) for estimating toxicity scores of the language outputs, and filtering generations based on the Perspective API analysis.
+
+We share many reflections in our published pre-print ([Mirowski, Mathewson et al (2022) ``Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals.''](https://arxiv.org/abs/2209.14958)), including how playwrights reflected that they  “wouldn't use [Dramatron] to write a full play,” and that Dramatron's output can be “formulaic.” Rather, they would use Dramatron for “world building,” for exploring alternative stories by changing characters or plot elements, and for creative idea generation.
+
+We are looking forward to learning if and how you might incorporate Dramatron into your own artistic practices. If you’d like to share thoughts, comments, or observations or have any questions, please contact us at dramatron@google.com.
 
 ## Usage
 
-Write example usage of your code. The instructions should ideally be valid when
-copy-pasted, and will be used by your technical reviewer to verify that your
-package functions correctly.
+**Dramatron** can be run as a web UI and as a Colab.
+
+Run the web UI by opening [`ui/index.html`](https://colab.research.google.com/github/deepmind/dramatron/blob/main/ui/index.html).
+
+Run the Colab by opening [`colab/dramatron.ipynb`](https://colab.research.google.com/github/deepmind/dramatron/blob/main/colab/dramatron.ipynb).
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/deepmind/dramatron/blob/main/colab/dramatron.ipynb)
 
 ## Citing this work
 
-Add citation details here, usually a pastable BibTeX snippet.
+```
+@article{mirowski2022co,
+  title={Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals},
+  author={Mirowski, Piotr and Mathewson, Kory W and Pittman, Jaylen and Evans, Richard},
+  journal={arXiv preprint arXiv:2209.14958},
+  year={2022}
+}
+```
 
 ## License and disclaimer
 
