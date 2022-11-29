@@ -203,6 +203,8 @@ document.querySelector('#submit-storyline').onclick = function() {
   setDisplay('storyline-main', 'none');
   setDisplay('storyline-min', 'unset');
   setDisplay('title-main', 'unset');
+  setDisplay('top-main', 'none');
+  setDisplay('top-min', 'unset');
 };
 
 /** Title controls **/

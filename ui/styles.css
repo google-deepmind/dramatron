@@ -17,6 +17,16 @@ body {
   }
 }
 
+@media screen and (min-height: 700px) {
+  #bottom-notes {
+    width: 80%;
+    max-width: 800px;
+    position: absolute;
+    bottom: 20px;
+    z-index: -1;
+  }
+}
+
 p {
   line-height: 1.25;
 }
@@ -38,12 +48,6 @@ p {
   font-size: 30px;
 }
 
-.title a {
-  cursor: pointer;
-  color: black;
-  text-decoration: none;
-}
-
 #top-line {
   margin-top: 10px;
 }
@@ -51,14 +55,6 @@ p {
 .intro-input {
   background-color: white;
   padding-bottom: 15px;
-}
-
-#bottom-notes {
-  width: 80%;
-  max-width: 800px;
-  position: absolute;
-  bottom: 20px;
-  z-index: -1;
 }
 
 #credit {
@@ -73,6 +69,24 @@ a:hover {
   color: white;
   background-color: black;
 }
+
+.top-main {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.top-main:hover {
+  background-color: unset;
+}
+
+.title img {
+  width: 200px;
+}
+
+.top-min {
+  text-decoration: none;
+}
+
 
 input::placeholder {
   font-family: monospace;
@@ -128,6 +142,7 @@ button.dialog-main {
 
 .invalid-message,
 .loader,
+.top-min,
 .storyline-min,
 .title-main,
 .title-mid,
