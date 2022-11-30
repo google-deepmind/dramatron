@@ -21,7 +21,7 @@ We are looking forward to learning if and how you might incorporate Dramatron in
 
 **Dramatron** can be run as a web UI and as a Colab.
 
-Run the web UI by opening [`ui/index.html`](https://colab.research.google.com/github/deepmind/dramatron/blob/main/ui/index.html).
+Access the web UI [here](https://deepmind.github.io/dramatron/).
 
 Run the Colab by opening [`colab/dramatron.ipynb`](https://colab.research.google.com/github/deepmind/dramatron/blob/main/colab/dramatron.ipynb).
 
