@@ -30,7 +30,7 @@ Run the Colab by opening [`colab/dramatron.ipynb`](https://colab.research.google
 ## Citing this work
 
 ```
-@article{mirowski2022co,
+@article{mirowski2022cowriting,
   title={Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals},
   author={Mirowski, Piotr and Mathewson, Kory W and Pittman, Jaylen and Evans, Richard},
   journal={arXiv preprint arXiv:2209.14958},
