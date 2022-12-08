@@ -8,7 +8,7 @@
 
 1. Access the web UI [here](https://deepmind.github.io/dramatron/).
 
-1. Run the Colab by opening [`colab/dramatron.ipynb`](https://colab.research.google.com/github/deepmind/dramatron/blob/main/colab/dramatron.ipynb). [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/deepmind/dramatron/blob/main/colab/dramatron.ipynb)
+1. Run the Colab by opening `colab/dramatron.ipynb`. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/deepmind/dramatron/blob/main/colab/dramatron.ipynb)
 
 ## Details
 
