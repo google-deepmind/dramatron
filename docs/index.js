@@ -38,10 +38,12 @@ document.querySelector('#submit-apikeys').onclick = async () => {
   // Validate OpenAI key.
   const apiKey = document.querySelector('#apikey').value;
   if (!apiKey) return;
-  const isGpt3KeyValid = await apiUtils.validateGpt3Key(apiKey);
-  if (isGpt3KeyValid) {
+  const gpt3KeyStatus = await apiUtils.validateGpt3Key(apiKey);
+  if (gpt3KeyStatus == apiUtils.REQUEST_OK) {
     location.href = `editor.html#${apiKey}${perspectiveKeyHashParam}`;
-  } else {
+  } else if (gpt3KeyStatus == apiUtils.CREDENTIALS_ERROR) {
     document.querySelector('#invalid-key').style.display = 'block';
+  } else if (gpt3KeyStatus == apiUtils.TIMEOUT_ERROR) {
+    document.querySelector('#timeout').style.display = 'block';
   }
 };

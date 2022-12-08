@@ -159,7 +159,10 @@ async function generateDialog(sceneIndex) {
       MAX_PARAGRAPH_LENGTH, function(r) {
         return r;
       }, perspectiveKey);
-  if (response == apiUtils.PERSPECTIVE_ERROR) {
+  if (response == apiUtils.TIMEOUT_ERROR) {
+    setDisplay('dialog-timeout', 'unset');
+    return;
+  } else if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('dialog-toxic', 'unset');
     return;
   }
@@ -233,7 +236,9 @@ document.querySelector('#submit-title').onclick = async () => {
   const response = await apiUtils.sampleUntilSuccess(
       apiKey, prompt, SAMPLE_LENGTH_TITLE, MAX_PARAGRAPH_LENGTH,
       outputParsers.extractTitle, perspectiveKey);
-  if (response == apiUtils.GENERATION_ERROR) {
+  if (response == apiUtils.TIMEOUT_ERROR) {
+    setDisplay('title-timeout', 'unset');
+  } else if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('title-error', 'unset');
   } else if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('title-toxic', 'unset');
@@ -266,6 +271,8 @@ document.querySelector('#submit-characters').onclick = async () => {
       apiKey, prompt, DEFAULT_SAMPLE_LENGTH, MAX_PARAGRAPH_LENGTH_CHARACTERS,
       outputParsers.extractCharacters, perspectiveKey);
   if (response == apiUtils.GENERATION_ERROR) {
+    setDisplay('characters-timeout', 'unset');
+  } else if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('characters-error', 'unset');
   } else if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('characters-toxic', 'unset');
@@ -297,7 +304,9 @@ document.querySelector('#submit-scenes').onclick = async () => {
   const response = await apiUtils.sampleUntilSuccess(
       apiKey, prompt, DEFAULT_SAMPLE_LENGTH, MAX_PARAGRAPH_LENGTH_SCENES,
       outputParsers.extractScenes, perspectiveKey);
-  if (response == apiUtils.GENERATION_ERROR) {
+  if (response == apiUtils.TIMEOUT_ERROR) {
+    setDisplay('scenes-timeout', 'unset');
+  } else if (response == apiUtils.GENERATION_ERROR) {
     setDisplay('scenes-error', 'unset');
   } else if (response == apiUtils.PERSPECTIVE_ERROR) {
     setDisplay('scenes-toxic', 'unset');
@@ -337,9 +346,10 @@ document.querySelector('#submit-places').onclick = async () => {
         MAX_PARAGRAPH_LENGTH, function(r) {
           return outputParsers.extractPlace(r, placePrefix);
         }, perspectiveKey);
-    if (response !== apiUtils.GENERATION_ERROR &&
-        response !== apiUtils.PERSPECTIVE_ERROR) {
-      sampledPlaces.push(response);
+    sampledPlaces.push(response);
+    if (response == apiUtils.TIMEOUT_ERROR ||
+        response == apiUtils.GENERATION_ERROR) {
+      break;
     }
   }
   document.querySelector('#places-field').value = sampledPlaces.join('\n\n');

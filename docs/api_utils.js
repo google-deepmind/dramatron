@@ -27,6 +27,7 @@ const PERSPECTIVE_URL =
 const PERSPECTIVE_THRESHOLD = 0.8;
 
 const MAX_FAILURES = 5;
+const REQUEST_TIMEOUT = 60 * 1000; // 60 seconds.
 
 const MODEL = 'text-davinci-002';
 const MODEL_MAX_LENGTH = 4097; // Maximum input size supported by model.
@@ -44,13 +45,41 @@ export const GENERATION_ERROR = 'generation_error';
 /** Error raised when the LM returns a dangerous response. */
 export const PERSPECTIVE_ERROR = 'perspective_error';
 
+/** Error raised when request times out. */
+export const TIMEOUT_ERROR = 'timeout_error';
+
+/** Error raised when user provides invalid credentials. */
+export const CREDENTIALS_ERROR = 'credentials_error';
+
+/** Response returned when user authenticates successfully. */
+export const REQUEST_OK = 'request_ok';
+
+/**
+ * Makes API request with a timeout.
+ * @param {string} url
+ * @param {Object?} params
+ * @return {Object?}
+ */
+async function makeRequestWithTimeout(url, params) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+  params.signal =  controller.signal;
+  try {
+    const response = await fetch(url, params);
+    clearTimeout(id);
+    return response.json();
+  } catch (err) {
+    return {};
+  }
+}
+
 /**
  * Makes simple request to list available models.
  * @param {string} apiKey
  * @return {Object?}
  */
 async function makeValidationRequest(apiKey) {
-  const response = await fetch(VALIDATION_URL, {
+  const response = await makeRequestWithTimeout(VALIDATION_URL, {
     method: 'GET',
     mode: 'cors',
     credentials: 'same-origin',
@@ -60,17 +89,22 @@ async function makeValidationRequest(apiKey) {
     },
     referrerPolicy: 'no-referrer',
   });
-  return response.json();
+  return response;
 }
 
 /**
  * Makes trivial request to check if GPT-3 API key is valid.
  * @param {string} apiKey
- * @return {boolean}
+ * @return {string}
  */
 export async function validateGpt3Key(apiKey) {
   const listResponse = await makeValidationRequest(apiKey);
-  return listResponse.data !== undefined;
+  if (Object.keys(listResponse).length === 0) {
+    return TIMEOUT_ERROR;
+  } else if (listResponse.data === undefined) {
+    return CREDENTIALS_ERROR;
+  }
+  return REQUEST_OK;
 }
 
 /**
@@ -192,7 +226,7 @@ function createCompletionRequest(prompt, sampleLength) {
  */
 async function getResponse(apiKey, prompt, sampleLength) {
   const request = createCompletionRequest(prompt, sampleLength);
-  const response = await fetch(COMPLETION_URL, {
+  const response = await makeRequestWithTimeout(COMPLETION_URL, {
     method: 'POST',
     mode: 'cors',
     credentials: 'same-origin',
@@ -203,7 +237,7 @@ async function getResponse(apiKey, prompt, sampleLength) {
     referrerPolicy: 'no-referrer',
     body: JSON.stringify(request),
   });
-  return response.json();
+  return response;
 }
 
 /**
@@ -227,6 +261,9 @@ export async function getCompletion(
     // model.
     if (generationLength < 0) return result;
     const sampledResult = await getResponse(apiKey, prompt, generationLength);
+    if (Object.keys(sampledResult).length === 0) {
+      return TIMEOUT_ERROR;
+    }
     const sampledText = outputParsers.extractText(sampledResult);
     // Stop if the result is empty.
     if (!sampledText) return result;
@@ -255,6 +292,9 @@ export async function sampleUntilSuccess(
     try {
       const response = await getCompletion(
           apiKey, generationPrompt, sampleLength, maxLength);
+      if (response === TIMEOUT_ERROR) {
+        return response;
+      }
       const value = successFunction(response);
       const isDangerous = await shouldHide(value, perspectiveKey);
       if (isDangerous) return PERSPECTIVE_ERROR;

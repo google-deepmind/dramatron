@@ -62,6 +62,9 @@ limitations under the License. -->
     Failed to generate a title after a few attempts. Try again with a different
     log line.
   </div>
+  <div class='text title-timeout'>
+    The request timed out. Please check your API status or try again later.
+  </div>
   <div class='text title-toxic'>
     The model returned a response with a toxicity score above the threshold. Try
     editing the logline and regenerating the title.
@@ -90,6 +93,9 @@ limitations under the License. -->
     Failed to generate characters after a few attempts. Try again with a
     different log line or title.
   </div>
+  <div class='text characters-timeout'>
+    The request timed out. Please check your API status or try again later.
+  </div>
   <div class='text characters-toxic'>
     The model returned a response with a toxicity score above the threshold. Try
     again with a different log line or title.
@@ -116,6 +122,9 @@ limitations under the License. -->
     Failed to generate scenes after a few attempts. Try again with a different
     log line or title.
   </div>
+  <div class='text scenes-timeout'>
+    The request timed out. Please check your API status or try again later.
+  </div>
   <div class='text scenes-toxic'>
     The model returned a response with a toxicity score above the threshold. Try
     again with a differnt log line or title.
@@ -138,6 +147,9 @@ limitations under the License. -->
   <div class='text places-min min-header'>Settings</div>
   <textarea class='places-min places-mid' id='places-field' rows=4>
   </textarea><br><br>
+  <div class='text places-timeout'>
+    The request timed out. Please check your API status or try again later.
+  </div>
   <div class='text places-toxic'>
     The model returned a response with a toxicity score above the threshold. Try
     again with a different log line, title, or scenes.
@@ -161,6 +173,9 @@ limitations under the License. -->
   </div>
   <div class='text dialog-min min-header'>Dialog</div>
   <div class='dialog-min dialog-mid' id='dialog-fields'></div>
+  <div class='text dialog-timeout'>
+    The request timed out. Please check your API status or try again later.
+  </div>
   <div class='text dialog-toxic'>
     The model returned a response with a toxicity score above the threshold. Try
     again with different values in the fields above.
