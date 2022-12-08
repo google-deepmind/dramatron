@@ -292,7 +292,7 @@ document.querySelector('#continue-characters').onclick = function() {
 document.querySelector('#submit-scenes').onclick = async () => {
   setDisplay('scenes-mid', 'none');
   setDisplay('scenes-error', 'none');
-  const prompt = `${prefixes.SCENE_PROMPT}${storyline()}\n${characters()}`;
+  const prompt = promptConstructors.createScenesPrompt(storyline(), characters());
   showLoading('#submit-scenes');
   const response = await apiUtils.sampleUntilSuccess(
       apiKey, prompt, DEFAULT_SAMPLE_LENGTH, MAX_PARAGRAPH_LENGTH_SCENES,

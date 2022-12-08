@@ -36,11 +36,18 @@ export function extractText(rawSample) {
  * @return {string}
  */
 export function extractTitle(text) {
+  text = text.trim();
+  if (text.includes(prefixes.END_MARKER)) {
+    text = text.split(prefixes.END_MARKER)[0];
+  }
   if (text.includes(prefixes.TITLE_ELEMENT)) {
     text = text.split(prefixes.TITLE_ELEMENT)[1];
   }
   if (text.includes(prefixes.EXAMPLE_ELEMENT)) {
     text = text.split(prefixes.EXAMPLE_ELEMENT)[0];
+  }
+  if (text[text.length - 1] === '.') {
+    text = text.slice(0, text.length - 1);
   }
   return text;
 }
@@ -51,8 +58,13 @@ export function extractTitle(text) {
  * @return {string}
  */
 export function extractCharacters(text) {
+  text = text.replaceAll(prefixes.STOP_MARKER, '');
+  if (text.includes(prefixes.END_MARKER)) {
+    text = text.split(prefixes.END_MARKER)[0];
+  }
   let charactersString = '';
-  for (const character of text.split(prefixes.CHARACTER_MARKER)) {
+  for (let character of text.split(prefixes.CHARACTER_MARKER)) {
+    character = character.trim();
     if (!character.length) continue;
     if (!character.includes(prefixes.DESCRIPTION_MARKER)) continue;
     const characterInfo = character.split(prefixes.DESCRIPTION_MARKER);
@@ -69,7 +81,16 @@ export function extractCharacters(text) {
  * @return {string}
  */
 export function extractScenes(text) {
-  return text.split(prefixes.SCENES_MARKER)[1].trim();
+  if (!text) {
+    throw 'No scenes generated, try again.';
+  }
+  if (text.includes(prefixes.END_MARKER)) {
+    text = text.split(prefixes.END_MARKER)[0];
+  }
+  if (text.includes(prefixes.SCENES_MARKER)) {
+    return text.split(prefixes.SCENES_MARKER)[1].trim();
+  }
+  return text;
 }
 
 /**
@@ -78,6 +99,9 @@ export function extractScenes(text) {
  * @return {!Array<string>}
  */
 export function extractPlaceNames(scenes) {
+  if (scenes.includes(prefixes.END_MARKER)) {
+    scenes = scenes.split(prefixes.END_MARKER)[0];
+  }
   const places = [];
   for (const place of scenes.matchAll(PLACE_REGEX)) {
     if (place.length >= 3) {

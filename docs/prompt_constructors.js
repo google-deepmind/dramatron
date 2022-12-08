@@ -109,3 +109,13 @@ export function createDialogContinuationPrompt(
       createDialogPrompt(sceneIndex, scenes, places, characters, storyline);
   return `${basePrompt}${dialog.trim()}\n\n`;
 }
+
+/**
+ * Constructs the prompt for scene generation.
+ * @param {string} storyline
+ * @param {string} characters
+ * @return {string}
+ */
+export function createScenesPrompt(storyline, characters) {
+  return `${prefixes.SCENE_PROMPT}${storyline}\n${characters}\n${prefixes.SCENES_MARKER}\n`;
+}

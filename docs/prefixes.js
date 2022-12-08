@@ -16,8 +16,8 @@
  * Prefixes for generation.
  */
 
-const END_MARKER = '<end>\n\n';
-const STOP_MARKER = '<stop>';
+export const END_MARKER = '<end>';
+export const STOP_MARKER = '<stop>';
 
 export const CHARACTER_MARKER = '<character>';
 export const DESCRIPTION_MARKER = '<description>';
@@ -43,6 +43,7 @@ ${CHARACTER_MARKER}Princess Leia ${DESCRIPTION_MARKER}Princess Leia is a feisty 
 ${CHARACTER_MARKER}Han Solo ${DESCRIPTION_MARKER}Han Solo is a brash mercenary space pilot of the Millenium Falcon and a friend of Chebacca. He will take Luke on his spaceship.${STOP_MARKER}
 ${CHARACTER_MARKER}Chewbacca ${DESCRIPTION_MARKER}Chewbacca is a furry and trustful monster. He is a friend of Han Solo and a copilot on the Millemium Falcon.${STOP_MARKER}
 ${END_MARKER}
+
 Example 2. `
 
 export const SCENE_PROMPT = `
@@ -61,49 +62,41 @@ ${PLOT_ELEMENT}The Ordinary World.
 Beat: Luke Skywalker is living a normal and humble life as a farm boy on his home planet.
 
 ${PLACE_ELEMENT}Desert of Tatooine.
-${PLOT_ELEMENT}Tall to Adventure.
+${PLOT_ELEMENT}Call to Adventure.
 Beat: Luke is called to his adventure by robot R2-D2 and Ben Kenobi. Luke triggers R2-D2’s message from Princess Leia and is intrigued by her message. When R2-D2 escapes to find Ben Kenobi, Luke follows and is later saved by Kenobi, who goes on to tell Luke about his Jedi heritage. Kenobi suggests that he should come with him.
-
-${PLACE_ELEMENT}Ben Kenobi's farm.
-${PLOT_ELEMENT}Tefusal of the Call.
-Beat: Luke refuses Kenobi, telling him that he can take Kenobi and the droids as far as Mos Eisley Spaceport — but he can’t possibly leave his Aunt and Uncle behind for some space adventure.
-
-${PLACE_ELEMENT}On spaceship The Millennium Falcon.
-${PLOT_ELEMENT}Tests, Allies, and Enemies.
-Beat: After Luke, Kenobi, and the droids hire Han Solo and Chewbacca to transport them onto Alderaan, Kenobi begins Luke’s training in the ways of the Force. Wielding his father’s lightsaber, Kenobi challenges Luke. At first, he can’t do it. But then Kenobi Kenobi Luke him to reach out and trust his feelings. Luke succeeds.
 
 ${PLACE_ELEMENT}On space station The Death Star.
 ${PLOT_ELEMENT}The Ordeal.
 Beat: As Kenobi goes off to deactivate the tractor beam so they can escape, Luke, Han, and Chewbacca discover that Princess Leia is being held on the Death Star with them. They rescue her and escape to the Millennium Falcon, hoping that Kenobi has successfully deactivated the tractor beam. Kenobi later sacrifices himself as Luke watches Darth Vader strike him down. Luke must now avenge his fallen mentor and carry on his teachings.
 
-${PLACE_ELEMENT}On fighter ship X-Wing.
-${PLOT_ELEMENT}The Resurrection.
-Beat: The Rebels — along with Luke as an X-Wing pilot — take on the Death Star. The Rebellion and the Galactic Empire wage war in an epic space battle. Luke is the only X-Wing pilot that was able to get within the trenches of the Death Star. But Darth Vader and his wingmen are in hot pursuit. Just as Darth Vader is about to destroy Luke, Han returns and clears the way for Luke. Luke uses the Force to guide his aiming as he fires upon the sole weak point of the deadly Death Star, destroying it for good.
-
 ${PLACE_ELEMENT}At the Rebellion base.
 ${PLOT_ELEMENT}The Return.
-Beat: Luke and Han return to the Rebellion base, triumphant, as they receive medals for the heroic journey. There is peace throughout the galaxy — at least for now.
+Beat: Luke and Han return to the Rebellion base, triumphant, as they receive medals for the heroic journey. There is peace throughout the galaxy — at least for now.${END_MARKER}
 
-${END_MARKER}
 Example 2. `;
 
 export const SETTING_PROMPT = `
 Example 1. Morgan adopts a new cat, Misterio, who sets a curse on anyone that pets them.
 ${PLACE_ELEMENT}The Adoption Center.
 ${DESCRIPTION_ELEMENT}The Adoption Center is a sad place, especially for an unadopted pet. It is full of walls and walls of cages and cages. Inside of each is an abandoned animal, longing for a home. The lighting is dim, gray, buzzing fluorescent.${END_MARKER}
+
 Example 2. James finds a well in his backyard that is haunted by the ghost of Sam.
 ${PLACE_ELEMENT}The well.
 ${DESCRIPTION_ELEMENT}The well is buried under grass and hedges. It is at least twenty feet deep, if not more and it is masoned with stones. It is 150 years old at least. It stinks of stale, standing water, and has vines growing up the sides. It is narrow enough to not be able to fit down if you are a grown adult human.${END_MARKER}
+
 Example 3. Mr. Dorbenson finds a book at a garage sale that tells the story of his own life. And it ends in a murder!
 ${PLACE_ELEMENT}The garage sale.
 ${DESCRIPTION_ELEMENT}It is a garage packed with dusty household goods and antiques. There is a box at the back that says FREE and is full of paper back books.${END_MARKER}
+
 Example 4. `;
 
 export const TITLES_PROMPT = `
 Examples of alternative, original and descriptive titles for known play and film scripts.
 
 Example 1. A science-fiction fantasy about a naive but ambitious farm boy from a backwater desert who discovers powers he never knew he had when he teams up with a feisty princess, a mercenary space pilot and an old wizard warrior to lead a ragtag rebellion against the sinister forces of the evil Galactic Empire. Title: The Death Star's Menace${END_MARKER}
+
 Example 2. Residents of San Fernando Valley are under attack by flying saucers from outer space. The aliens are extraterrestrials who seek to stop humanity from creating a doomsday weapon that could destroy the universe and unleash the living dead to stalk humans who wander into the cemetery looking for evidence of the UFOs. The hero Jeff, an airline pilot, will face the aliens. Title: The Day The Earth Was Saved By Outer Space.${END_MARKER}
+
 Example 3. `;
 
 export const DIALOG_PROMPT = `
@@ -180,38 +173,6 @@ You boys are feudin'?
 
 JEFF
 Oh no Edie, nothing like that.
-
-DANNY
-Hey Edie, how about you and me balling it up in Albuquerque?
-
-EDITH
-Albuquerque? Have you read that flight schedule Boy?
-
-DANNY
-What about it?
-
-EDITH
-We land in Albuquerque at 4 am. That's strictly a nine o'clock town.
-
-DANNY
-Well I know a friend that'll help us --
-
-EDITH
-Let's have a problem first, huh Danny.
-
-DANNY
-Ah he's worried about Paula.
-
-EDITH
-I read about that cemetery business. I tried to get you kids to not buy too near
-one of those things. We get there soon enough as it is.
-
-DANNY
-He thought it'd be quiet and peaceful there.
-
-EDITH
-No doubt about that. It's quiet alright, like a tomb. I'm sorry Jeff, that was a
-bad joke.
 
 Example 2.
 `;
