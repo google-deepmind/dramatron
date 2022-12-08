@@ -57,9 +57,17 @@ p {
   font-size: 40px;
 }
 
-.editor .title,
-.details .title {
+.editor .title {
   font-size: 30px;
+}
+
+.details .title {
+  margin-top: 25px;
+  font-size: 18px;
+}
+
+.details .main-title {
+  font-weight: bold;
 }
 
 #top-line {
@@ -84,6 +92,12 @@ a:hover {
   background-color: black;
 }
 
+.go-home-top {
+  float: right;
+  margin-right: 15px;
+  font-size: 14px;
+}
+
 .top-main {
   cursor: pointer;
   text-decoration: none;
@@ -93,7 +107,8 @@ a:hover {
   background-color: unset;
 }
 
-.title img {
+.title img,
+.details img {
   width: 200px;
 }
 
