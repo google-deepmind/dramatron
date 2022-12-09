@@ -49,7 +49,10 @@ export const PERSPECTIVE_ERROR = 'perspective_error';
 export const TIMEOUT_ERROR = 'timeout_error';
 
 /** Error raised when user provides invalid credentials. */
-export const CREDENTIALS_ERROR = 'credentials_error';
+export const CREDENTIALS_ERROR = 'invalid_request_error';
+
+/** Error raised when user provides key without quota. */
+export const QUOTA_ERROR = 'insufficient_quota';
 
 /** Response returned when user authenticates successfully. */
 export const REQUEST_OK = 'request_ok';
@@ -74,35 +77,14 @@ async function makeRequestWithTimeout(url, params) {
 }
 
 /**
- * Makes simple request to list available models.
- * @param {string} apiKey
- * @return {Object?}
- */
-async function makeValidationRequest(apiKey) {
-  const response = await makeRequestWithTimeout(VALIDATION_URL, {
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-    },
-    referrerPolicy: 'no-referrer',
-  });
-  return response;
-}
-
-/**
  * Makes trivial request to check if GPT-3 API key is valid.
  * @param {string} apiKey
  * @return {string}
  */
 export async function validateGpt3Key(apiKey) {
-  const listResponse = await makeValidationRequest(apiKey);
-  if (Object.keys(listResponse).length === 0) {
-    return TIMEOUT_ERROR;
-  } else if (listResponse.data === undefined) {
-    return CREDENTIALS_ERROR;
+  const response = await getResponse(apiKey, '', 1);
+  if (response.error !== undefined) {
+    return response.error.type;
   }
   return REQUEST_OK;
 }

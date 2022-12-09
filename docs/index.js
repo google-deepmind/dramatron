@@ -21,6 +21,9 @@ import * as apiUtils from './api_utils.js';
 
 /** Tries to validate API keys and open editor. */
 document.querySelector('#submit-apikeys').onclick = async () => {
+  for (const elem of document.querySelectorAll('.invalid-message')) {
+    elem.style.display = 'none';
+  }
   let perspectiveKeyHashParam = '';
   // Validate Perspective API key.
   const perspectiveKey = document.querySelector('#perspectivekey').value;
@@ -41,6 +44,8 @@ document.querySelector('#submit-apikeys').onclick = async () => {
   const gpt3KeyStatus = await apiUtils.validateGpt3Key(apiKey);
   if (gpt3KeyStatus == apiUtils.REQUEST_OK) {
     location.href = `editor.html#${apiKey}${perspectiveKeyHashParam}`;
+  }  else if (gpt3KeyStatus == apiUtils.QUOTA_ERROR) {
+    document.querySelector('#quota-error').style.display = 'block';
   } else if (gpt3KeyStatus == apiUtils.CREDENTIALS_ERROR) {
     document.querySelector('#invalid-key').style.display = 'block';
   } else if (gpt3KeyStatus == apiUtils.TIMEOUT_ERROR) {
