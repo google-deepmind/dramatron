@@ -27,7 +27,7 @@ During the development of Dramatron and through discussions with industry profes
 
 In our pre-print paper [Mirowski, Mathewson et al (2022) Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals](https://arxiv.org/abs/2209.14958) we share many reflections including how playwrights reflected that they "wouldn't use [Dramatron] to write a full play," and that Dramatron's output can be "formulaic." Rather, they would use Dramatron for "world building," for exploring alternative stories by changing characters or plot elements, and for creative idea generation.
 
-Dramatron is a web interface and a Google Colab that interact with a pre-trained Large Language Model (LLM). Currently, Dramatron can be used with OpenAI's GPT-3 LLM. No user input (log lines, other prompts, edits), interactions or API keys are by Dramatron. Please refer to OpenAI's <a href='https://openai.com/privacy/'>Privacy Policy</a> and <a href='https://openai.com/terms/'>Terms of Use</a> if you use GPT-3.
+Dramatron is a web interface and a Google Colab that interact with a pre-trained Large Language Model (LLM). Currently, Dramatron can be used with OpenAI's GPT-3 LLM. No user input (log lines, other prompts, edits), interactions or API keys are stored by Dramatron. Please refer to OpenAI's <a href='https://openai.com/privacy/'>Privacy Policy</a> and <a href='https://openai.com/terms/'>Terms of Use</a> if you use GPT-3.
       
 We are looking forward to learning if and how you might incorporate Dramatron into your own artistic practices. If you’d like to share thoughts, comments, or observations or have any questions, please contact us at dramatron@deepmind.com.
 
