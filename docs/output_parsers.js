@@ -120,5 +120,8 @@ export function extractPlaceNames(scenes) {
  * @return {string}
  */
 export function extractPlace(description, prefix) {
+  if (description.includes(prefixes.END_MARKER)) {
+    description = description.split(prefixes.END_MARKER)[0];
+  }
   return `${prefix.trim()}\n${description}`;
 }
