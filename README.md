@@ -12,9 +12,9 @@
 
 ## Details
 
-**Dramatron** uses large language models to generate long, coherent text and could be useful for authors for **co-writing** theatre scripts and screenplays. Dramatron uses hierarchical story generation for consistency across the generated text. Starting from a log line, Dramatron interactively generates character descriptions, plot points, location descriptions, and dialogue. These generations provide human authors with material for compilation, editing, and rewriting.
+**Dramatron** uses existing and pre-trained large language models to generate long, coherent text and could be useful for authors for **co-writing** theatre scripts and screenplays. Dramatron uses hierarchical story generation for consistency across the generated text. Starting from a log line, Dramatron interactively generates character descriptions, plot points, location descriptions, and dialogue. These generations provide human authors with material for compilation, editing, and rewriting.
 
-Dramatron is conceived as a writing tool and as a source of inspiration and exploration for writers. To evaluate Dramatron’s usability and capabilities, we engaged 15 playwrights and screenwriters in two-hour long user study sessions to co-write scripts alongside Dramatron.
+Dramatron is conceived as a writing tool and as a source of inspiration and exploration for writers. We do not believe it can write a play or a script by itself. To evaluate Dramatron’s usability and capabilities, we engaged 15 playwrights and screenwriters in two-hour long user study sessions to co-write scripts alongside Dramatron.
 
 One concrete illustration of how Dramatron can be utilised by creative communities is how one playwright staged 4 heavily edited and rewritten scripts co-written alongside Dramatron. In the public theatre show, *Plays by Bots*, a talented cast of experienced actors with improvisational skills gave meaning to Dramatron scripts through acting and interpretation.
 
@@ -27,6 +27,8 @@ During the development of Dramatron and through discussions with industry profes
 
 In our pre-print paper [Mirowski, Mathewson et al (2022) Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals](https://arxiv.org/abs/2209.14958) we share many reflections including how playwrights reflected that they "wouldn't use [Dramatron] to write a full play," and that Dramatron's output can be "formulaic." Rather, they would use Dramatron for "world building," for exploring alternative stories by changing characters or plot elements, and for creative idea generation.
 
+Dramatron is only a web interface and a Google Colab that interacts with a pre-trained Large Language Model (LLM). Currently, our tool proposes to use OpenAI's GPT-3 LLM and we expect to add more LLM interfaces in the future. No user input (log lines, other prompts, edits) and no login key is stored by us. Please refer to OpenAI's <a href='https://openai.com/privacy/'>Privacy Policy</a> and <a href='https://openai.com/terms/'>Terms of Use</a> if you use GPT-3.
+      
 We are looking forward to learning if and how you might incorporate Dramatron into your own artistic practices. If you’d like to share thoughts, comments, or observations or have any questions, please contact us at dramatron@deepmind.com.
 
 The guide for contributors to Dramatron can be found [here](CONTRIBUTING.md).
