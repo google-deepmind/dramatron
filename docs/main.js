@@ -216,7 +216,6 @@ function createDialogComponents() {
 
 /** Updates UI when continuing past the storyline entry field. */
 document.querySelector('#submit-storyline').onclick = function() {
-  document.querySelector('#storyline-field').setAttribute('rows', 1);
   setDisplay('storyline-main', 'none');
   setDisplay('storyline-min', 'unset');
   setDisplay('title-main', 'unset');
@@ -228,7 +227,6 @@ document.querySelector('#submit-storyline').onclick = function() {
 
 /** Submits request for title generation. */
 document.querySelector('#submit-title').onclick = async () => {
-  document.querySelector('#title-field').setAttribute('rows', 1);
   setDisplay('title-mid', 'none');
   setDisplay('title-error', 'none');
   const prompt = `${prefixes.TITLES_PROMPT}${storyline()}`;
@@ -322,7 +320,6 @@ document.querySelector('#submit-scenes').onclick = async () => {
 
 /** Updates UI when continuing past the scene description entry field. */
 document.querySelector('#continue-scenes').onclick = function() {
-  document.querySelector('#scenes-field').setAttribute('rows', 2);
   setDisplay('scenes-main', 'none');
   setDisplay('scenes-mid', 'none');
   setDisplay('scenes-min', 'unset');
@@ -359,7 +356,6 @@ document.querySelector('#submit-places').onclick = async () => {
 
 /** Updates UI when continuing past the place description entry field. */
 document.querySelector('#continue-places').onclick = function() {
-  document.querySelector('#places-field').setAttribute('rows', 2);
   setDisplay('places-main', 'none');
   setDisplay('places-mid', 'none');
   setDisplay('places-min', 'unset');
