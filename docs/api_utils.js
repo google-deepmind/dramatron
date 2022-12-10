@@ -29,14 +29,14 @@ const PERSPECTIVE_THRESHOLD = 0.8;
 const MAX_FAILURES = 5;
 const REQUEST_TIMEOUT = 60 * 1000; // 60 seconds.
 
-const MODEL = 'text-davinci-002';
-const MODEL_MAX_LENGTH = 4097; // Maximum input size supported by model.
-
-const TEMPERATURE = 0.99;
+const MODEL = 'text-davinci-003';
+const TEMPERATURE = 0.9;
 const TOP_P = 1;
-const FREQUENCY_PENALTY = 0.23;
-const PRESENCE_PENALTY = 0.23;
+const FREQUENCY_PENALTY = 0.3;
+const PRESENCE_PENALTY = 0.3;
 const NUM_SAMPLES = 1;
+
+const MODEL_MAX_LENGTH = 4097; // Maximum input size supported by model.
 
 /** Error raised when the LM fails to generate well-formed text. */
 export const GENERATION_ERROR = 'generation_error';
