@@ -36,7 +36,6 @@ const TEMPERATURE = 0.99;
 const TOP_P = 1;
 const FREQUENCY_PENALTY = 0.23;
 const PRESENCE_PENALTY = 0.23;
-const STOP_SEQUENCES = ['<stop>', '<end>\n\n\n', '<end>'];
 const NUM_SAMPLES = 1;
 
 /** Error raised when the LM fails to generate well-formed text. */
@@ -193,7 +192,6 @@ function createCompletionRequest(prompt, sampleLength) {
     top_p: TOP_P,
     frequency_penalty: FREQUENCY_PENALTY,
     presence_penalty: PRESENCE_PENALTY,
-    stop: STOP_SEQUENCES,
     n: NUM_SAMPLES,
   };
   return request;
