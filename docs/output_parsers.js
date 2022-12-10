@@ -105,7 +105,9 @@ export function extractPlaceNames(scenes) {
   const places = [];
   for (const place of scenes.matchAll(PLACE_REGEX)) {
     if (place.length >= 3) {
-      places.push(place[2]);
+      if (!places.includes(place[2]) {
+        places.push(place[2]);
+      }
     }
   }
   return places;
