@@ -2,6 +2,13 @@
 
 <img src="dramatron-animation.gif" />
 
+## Try Dramatron
+
+**Dramatron** can be run in Python as a Colab, by opening `colab/dramatron.ipynb`. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/deepmind/dramatron/blob/main/colab/dramatron.ipynb)
+The Colab is provided ``unplugged'', without a large language model interface. To use it, you will need to implement functions `__init__` and `sample`, by adding your code to sample from your own large language model.
+
+## Details
+
 **Dramatron** uses existing, pre-trained large language models to generate long, coherent text and could be useful for authors for **co-writing** theatre scripts and screenplays. Dramatron uses hierarchical story generation for consistency across the generated text. Starting from a log line, Dramatron interactively generates character descriptions, plot points, location descriptions, and dialogue. These generations provide human authors with material for compilation, editing, and rewriting.
 
 Dramatron is conceived as a writing tool and as a source of inspiration and exploration for writers. To evaluate Dramatron’s usability and capabilities, we engaged 15 playwrights and screenwriters in two-hour long user study sessions to co-write scripts alongside Dramatron.
@@ -15,7 +22,7 @@ During the development of Dramatron and through discussions with industry profes
 * The output of a language model may include elements of the text used to train the language model. One possible mitigation is for the human co-writer to search for substrings from outputs to help to identify plagiarism.
 * Dramatron may reproduce biases and stereotypes found in the corpus, and may generate offensive text. One possible mitigation is to use the [Perspective API](https://perspectiveapi.com/) for estimating toxicity scores of the language outputs, and filtering generations based on the Perspective API analysis.
 
-In our pre-print paper [Mirowski, Mathewson et al (2022) Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals](https://arxiv.org/abs/2209.14958) we share many reflections including how playwrights reflected that they "wouldn't use [Dramatron] to write a full play," and that Dramatron's output can be "formulaic." Rather, they would use Dramatron for "world building," for exploring alternative stories by changing characters or plot elements, and for creative idea generation.
+In our SIG CHI 2023 paper [Mirowski, Mathewson et al (2023) Co-Writing Screenplays and Theatre Scripts with Language Models: An Evaluation by Industry Professionals](https://dl.acm.org/doi/10.1145/3544548.3581225) [(and in the 2022 pre-print on arXiv)](https://arxiv.org/abs/2209.14958), we share many reflections including how playwrights reflected that they "wouldn't use [Dramatron] to write a full play," and that Dramatron's output can be "formulaic." Rather, they would use Dramatron for "world building," for exploring alternative stories by changing characters or plot elements, and for creative idea generation.
 
 We are looking forward to learning if and how you might incorporate Dramatron into your own artistic practices. If you’d like to share thoughts, comments, or observations or have any questions, please contact us at dramatron@deepmind.com.
 
